@@ -22,7 +22,7 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- Turn highlighting off (used after successful search)
-vim.keymap.set('n', '<C-i>', ':nohlsearch<CR>', { desc = 'Turn off highlighting after search' })
+vim.keymap.set('n', '<C-s>', ':nohlsearch<CR>', { desc = 'Turn off highlighting after search' })
 
 -- Add versions of yank that copy to system clipboard
 vim.keymap.set('n', '<leader>y', '"+y', { desc = 'Yank line to clipboard' })
@@ -296,8 +296,6 @@ require('lazy').setup {
       capabilities = vim.tbl_deep_extend('force', capabilities, require('cmp_nvim_lsp').default_capabilities())
 
       local servers = {
-        jedi_language_server = {},
-        tsserver = {},
         lua_ls = {
           settings = {
             Lua = {
@@ -311,8 +309,6 @@ require('lazy').setup {
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua',
-        'isort',
-        'prettierd',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
       require('mason-lspconfig').setup {
