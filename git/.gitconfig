@@ -1,0 +1,8 @@
+[user]
+	email = hugowalkersmith@gmail.com
+	name = hugo
+[init]
+	defaultbranch = master
+[core]
+	pager = cat
+	editor = vim
