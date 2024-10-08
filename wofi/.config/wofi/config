@@ -1,0 +1,9 @@
+allow_images=true
+width=650
+height=440
+mode=drun
+matching=fuzzy
+key_down= Ctrl-n
+key_up=Ctrl-p
+hide_scroll=true
+no_actions=true
