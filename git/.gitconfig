@@ -4,5 +4,5 @@
 [init]
 	defaultbranch = master
 [core]
-	pager = cat
+	pager = bat
 	editor = vim

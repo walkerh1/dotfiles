@@ -102,3 +102,10 @@ source $ZSH/oh-my-zsh.sh
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
+
+if [ -e .aliases.sh ]; then
+  source .aliases.sh
+fi

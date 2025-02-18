@@ -154,12 +154,13 @@ require('lazy').setup {
 
   -- Colorscheme --
   {
-    'folke/tokyonight.nvim',
+    'catppuccin/nvim',
+    lazy = false,
+    name = 'catppuccin',
     priority = 1000,
-    init = function()
-      -- 'tokyonight-['moon', 'storm', 'night', 'day']
-      vim.cmd.colorscheme 'tokyonight-moon'
-      vim.cmd.hi 'Comment gui=none'
+    config = function()
+      require('catppuccin').setup {}
+      vim.cmd.colorscheme 'catppuccin-frappe'
     end,
   },
 
