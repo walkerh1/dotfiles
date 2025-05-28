@@ -5,4 +5,4 @@
 	defaultbranch = master
 [core]
 	pager = bat
-	editor = vim
+	editor = nvim

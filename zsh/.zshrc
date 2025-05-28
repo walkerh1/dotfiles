@@ -109,3 +109,6 @@ source <(fzf --zsh)
 if [ -e .aliases.sh ]; then
   source .aliases.sh
 fi
+
+# Add go/bin to PATH
+export PATH="$PATH:$HOME/go/bin"

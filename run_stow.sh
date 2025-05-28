@@ -2,6 +2,8 @@
 
 for item in *; do
 	if [ -d "$item" ]; then
-		stow "$item"
+		stow --adopt "$item"
 	fi
 done
+
+git reset --hard

@@ -304,6 +304,7 @@ require('lazy').setup {
             },
           },
         },
+        gopls = {},
       }
 
       require('mason').setup()

@@ -6,3 +6,5 @@ alias gcm="git commit -m"
 alias gs="git status"
 alias gl="git log --pretty=oneline --graph"
 alias gd="git diff"
+
+alias docker="podman"
