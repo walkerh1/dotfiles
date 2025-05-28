@@ -106,9 +106,11 @@ source $ZSH/oh-my-zsh.sh
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 
+# Set aliases
 if [ -e .aliases.sh ]; then
   source .aliases.sh
 fi
 
-# Add go/bin to PATH
-export PATH="$PATH:$HOME/go/bin"
+# Set golang paths
+export GOPATH=$HOME/go
+export PATH=$PATH:$GOPATH/bin
