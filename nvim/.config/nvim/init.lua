@@ -118,6 +118,22 @@ require('lazy').setup {
             require('telescope.themes').get_dropdown(),
           },
         },
+        pickers = {
+          find_files = { hidden = true },
+          live_grep = {
+            additional_args = function()
+              return { '--hidden' }
+            end,
+          },
+          grep_string = {
+            additional_args = function()
+              return { '--hidden' }
+            end,
+          },
+        },
+        defaults = {
+          file_ignore_patterns = { '.git/' },
+        },
       }
 
       pcall(require('telescope').load_extension, 'fzf')
