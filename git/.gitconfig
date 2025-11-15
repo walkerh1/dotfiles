@@ -2,9 +2,11 @@
 	email = hugowalkersmith@gmail.com
 	name = hugo
 [init]
-	defaultbranch = master
+	defaultbranch = main
 [core]
 	pager = bat
 	editor = nvim
 [url "ssh://git@github.com/"]
 	insteadOf = https://github.com/
+[pull]
+	rebase = true

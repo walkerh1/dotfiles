@@ -70,7 +70,7 @@ ZSH_THEME="robbyrussell"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git)
+plugins=(git podman)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -114,3 +114,6 @@ fi
 # Set golang paths
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
+
+# Set up fnm completion
+eval "$(fnm env --use-on-cd --shell zsh)"

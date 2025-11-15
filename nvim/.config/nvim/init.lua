@@ -69,6 +69,9 @@ vim.opt.termguicolors = true
 -- Cursor offset from top and bottom of page
 vim.opt.scrolloff = 10
 
+-- Persist gutter (to prevent layout shift)
+vim.opt.signcolumn = 'yes'
+
 -- Listener for TextYankPost event
 vim.api.nvim_create_autocmd('TextYankPost', {
   desc = 'Highlight when yanking text',
@@ -132,7 +135,7 @@ require('lazy').setup {
           },
         },
         defaults = {
-          file_ignore_patterns = { '.git/' },
+          file_ignore_patterns = { '.git/', 'vendor/' },
         },
       }
 
