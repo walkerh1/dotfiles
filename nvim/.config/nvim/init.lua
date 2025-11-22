@@ -6,6 +6,9 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
+-- Prevent "No new line at end of file" in git
+vim.opt.fixeol = false
+
 -- =================================== Key Mappings =====================================
 
 -- Use "jj" to go from INSERT to NORMAL mode
@@ -34,6 +37,33 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagn
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
+-- Wrap/unwrap lines
+local function toggle_wrap()
+  if vim.wo.wrap then
+    vim.wo.wrap = false
+  else
+    vim.wo.wrap = true
+  end
+end
+vim.keymap.set('n', '<leader>ww', toggle_wrap, { desc = 'Toggle [Wrap] lines' })
+vim.keymap.set('v', '<leader>ww', toggle_wrap, { desc = 'Toggle [Wrap] lines' })
+
+-- ===================================== Icons ========================================
+
+local icons = {
+  diagnostics = {
+    Error = ' ',
+    Warn = ' ',
+    Hint = ' ',
+    Info = ' ',
+  },
+  git = {
+    Added = ' ',
+    Modified = ' ',
+    Removed = ' ',
+  },
+}
+
 -- ===================================== Settings ========================================
 
 -- Include line numbers in gutter
@@ -54,7 +84,7 @@ vim.opt.swapfile = false
 -- Do not create a backup file
 vim.opt.backup = false
 
--- Ybnq va gur onpxhc svyr fgberq va haqbqve
+-- Enable undo on re-opened buffers
 vim.opt.undofile = true
 
 -- Highlight search matches
@@ -81,6 +111,18 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
+-- Set diagnostics icons
+vim.diagnostic.config {
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = icons.diagnostics.Error,
+      [vim.diagnostic.severity.WARN] = icons.diagnostics.Warn,
+      [vim.diagnostic.severity.HINT] = icons.diagnostics.Hint,
+      [vim.diagnostic.severity.INFO] = icons.diagnostics.Info,
+    },
+  },
+}
+
 -- ================================== Plugin Manager =====================================
 
 local lazypath = vim.fn.stdpath 'data' .. '/lazy/lazy.nvim'
@@ -94,7 +136,7 @@ end ---@diagnostic disable-next-line: undefined-field
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup {
-  -- Detect tabstop and shiftwidth automatically
+  -- Detect tabstop and shiftwidth automatically --
   'tpope/vim-sleuth',
 
   -- Telescope (Fuzzy Finder) --
@@ -112,7 +154,7 @@ require('lazy').setup {
         end,
       },
       { 'nvim-telescope/telescope-ui-select.nvim' },
-      { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+      { 'nvim-mini/mini.icons', version = '*' },
     },
     config = function()
       require('telescope').setup {
@@ -135,7 +177,7 @@ require('lazy').setup {
           },
         },
         defaults = {
-          file_ignore_patterns = { '.git/', 'vendor/' },
+          file_ignore_patterns = { '.git/', 'node_modules', 'vendor/' },
         },
       }
 
@@ -157,6 +199,7 @@ require('lazy').setup {
         builtin.current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
           winblend = 10,
           previewer = false,
+          transparent_background = false,
         })
       end, { desc = '[/] Fuzzily search in current buffer' })
       vim.keymap.set('n', '<leader>s/', function()
@@ -183,6 +226,63 @@ require('lazy').setup {
     end,
   },
 
+  -- Status line --
+  {
+    'nvim-lualine/lualine.nvim',
+    config = function()
+      require('lualine').setup {
+        options = {
+          globalstatus = true,
+        },
+        sections = {
+          lualine_a = { 'mode' },
+          lualine_b = { 'branch' },
+          lualine_c = {
+            {
+              'diagnostics',
+              symbols = {
+                error = icons.diagnostics.Error,
+                warn = icons.diagnostics.Warn,
+                info = icons.diagnostics.Info,
+                hint = icons.diagnostics.Hint,
+              },
+            },
+            {
+              'filetype',
+              icon_only = true,
+              separator = '',
+              padding = { left = 1, right = 0 },
+            },
+            {
+              'filename',
+              padding = { left = 0, right = 0 },
+            },
+          },
+          lualine_x = {
+            {
+              'diff',
+              symbols = {
+                added = icons.git.Added,
+                modified = icons.git.Modified,
+                removed = icons.git.Removed,
+              },
+              source = function()
+                local gitsigns = vim.b.gitsigns_status_dict
+                if gitsigns then
+                  return {
+                    added = gitsigns.added,
+                    modified = gitsigns.changed,
+                    removed = gitsigns.removed,
+                  }
+                end
+              end,
+            },
+          },
+        },
+      }
+    end,
+  },
+
   -- Treesitter --
   {
     'nvim-treesitter/nvim-treesitter',
@@ -202,6 +302,10 @@ require('lazy').setup {
         'query',
         'vim',
         'vimdoc',
+        'go',
+        'gomod',
+        'gowork',
+        'gosum',
       },
       auto_install = true,
       highlight = { enable = true },
@@ -323,7 +427,43 @@ require('lazy').setup {
             },
           },
         },
-        gopls = {},
+        gopls = {
+          settings = {
+            gopls = {
+              gofumpt = true,
+              codelenses = {
+                gc_details = false,
+                generate = true,
+                regenerate_cgo = true,
+                run_govulncheck = true,
+                test = true,
+                tidy = true,
+                upgrade_dependency = true,
+                vendor = true,
+              },
+              hints = {
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+                compositeLiteralTypes = true,
+                constantValues = true,
+                functionTypeParameters = true,
+                parameterNames = true,
+                rangeVariableTypes = true,
+              },
+              analyses = {
+                nilness = true,
+                unusedparams = true,
+                unusedwrite = true,
+                useany = true,
+              },
+              usePlaceholders = true,
+              completeUnimported = true,
+              staticcheck = true,
+              directoryFilters = { '-.git', '-node_modules' },
+              semanticTokens = true,
+            },
+          },
+        },
       }
 
       require('mason').setup()
@@ -405,20 +545,11 @@ require('lazy').setup {
     end,
   },
 
-  -- Miscellaneous --
+  -- Commenting --
   {
-    'echasnovski/mini.nvim',
+    'nvim-mini/mini.comment',
     dependencies = { 'JoosepAlviste/nvim-ts-context-commentstring' },
     config = function()
-      -- status line --
-      local statusline = require 'mini.statusline'
-      statusline.setup { use_icons = vim.g.have_nerd_font }
-      ---@diagnostic disable-next-line: duplicate-set-field
-      statusline.section_location = function()
-        return '%21:%2v'
-      end
-
-      -- comment --
       require('mini.comment').setup {
         options = {
           ignore_blank_lines = true,
@@ -443,15 +574,27 @@ require('lazy').setup {
   {
     'nvim-tree/nvim-tree.lua',
     version = '*',
+    dependencies = { 'nvim-mini/mini.icons', version = '*' },
     lazy = false,
-    dependencies = { 'nvim-tree/nvim-web-devicons' },
     config = function()
       require('nvim-tree').setup {
         sort = { sorter = 'case_sensitive' },
         view = { width = 40 },
-        renderer = { group_empty = true },
-        filters = { dotfiles = false },
-        update_focused_file = { enable = true },
+        renderer = {
+          full_name = false,
+          group_empty = false,
+          indent_markers = {
+            enable = true,
+          },
+          icons = {
+            glyphs = require('mini.icons').mock_nvim_web_devicons(),
+            git_placement = 'right_align',
+          },
+          root_folder_modifier = ':t',
+        },
+        git = {
+          show_on_open_dirs = false,
+        },
       }
       vim.keymap.set('n', '<leader>pv', ':NvimTreeToggle<CR>', { desc = 'Open [P]roject [V]iew' })
     end,
@@ -519,5 +662,53 @@ require('lazy').setup {
         map('n', '<leader>tD', gitsigns.toggle_deleted, { desc = '[T]oggle git show [D]eleted' })
       end,
     },
+  },
+
+  -- Indent guides --
+  {
+    'lukas-reineke/indent-blankline.nvim',
+    main = 'ibl',
+    config = function()
+      require('ibl').setup {
+        indent = {
+          char = '│',
+          tab_char = '│',
+        },
+        scope = {
+          enabled = false,
+        },
+        exclude = {
+          buftypes = {
+            'nofile',
+            'terminal',
+          },
+        },
+      }
+    end,
+  },
+  {
+    'nvim-mini/mini.indentscope',
+    version = '*',
+    config = function()
+      require('mini.indentscope').setup {
+        symbol = '│',
+        draw = {
+          delay = 0,
+          animation = function()
+            return 0
+          end,
+        },
+        options = {
+          try_as_border = true,
+        },
+      }
+      vim.api.nvim_set_hl(0, 'MiniIndentScopeSymbol', { fg = '#7aa2f7' })
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = { 'NvimTree' },
+        callback = function()
+          vim.b.miniindentscope_disable = true
+        end,
+      })
+    end,
   },
 }

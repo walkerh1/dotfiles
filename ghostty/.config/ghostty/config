@@ -1,6 +1,6 @@
 shell-integration-features = no-cursor
 cursor-style-blink = false
-theme = Ghostty Default Style Dark
+theme = Catppuccin Frappe
 
 font-family = JetBrains Mono
 font-family-bold = JetBrains Mono Bold
