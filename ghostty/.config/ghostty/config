@@ -1,6 +1,9 @@
-shell-integration-features = no-cursor
-cursor-style-blink = false
+macos-option-as-alt = true
 
+cursor-style-blink = false
+shell-integration-features = no-cursor
+
+font-size = 15
 font-family = JetBrains Mono
 font-family-bold = JetBrains Mono Bold
 font-family-italic = JetBrains Mono Italic
