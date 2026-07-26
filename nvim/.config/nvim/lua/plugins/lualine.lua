@@ -10,25 +10,6 @@ return {
         lualine_b = {
           'branch',
           {
-            'diff',
-            colored = true,
-            symbols = {
-              added = Icons.git.Added,
-              modified = Icons.git.Modified,
-              removed = Icons.git.Removed,
-            },
-            source = function()
-              local gitsigns = vim.b.gitsigns_status_dict
-              if gitsigns then
-                return {
-                  added = gitsigns.added,
-                  modified = gitsigns.changed,
-                  removed = gitsigns.removed,
-                }
-              end
-            end,
-          },
-          {
             'diagnostics',
             symbols = {
               error = Icons.diagnostics.Error,
@@ -38,7 +19,19 @@ return {
             },
           },
         },
-        lualine_c = { 'filename' },
+        lualine_c = {
+          {
+            'lsp_status',
+            icon = '',
+            symbols = {
+              spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
+              done = '✓',
+              separator = ' ',
+            },
+            show_name = true,
+          },
+          'filename'
+        },
         lualine_x = {
           'encoding',
           {
