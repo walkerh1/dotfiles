@@ -7,3 +7,6 @@
 	insteadOf = https://github.com/
 [pull]
 	rebase = true
+[user]
+	name = hugo
+  email = hugowalkersmith@gmail.com

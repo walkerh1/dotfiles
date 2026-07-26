@@ -71,3 +71,14 @@ vim.lsp.config('lua_ls', {
   },
 })
 vim.lsp.enable 'lua_ls'
+
+-- Bash/Zsh
+vim.lsp.config('bashls', {
+  cmd = { 'bash-language-server', 'start' },
+  filetypes = { 'sh', 'bash', 'zsh' },
+  root_dir = function(bufnr, on_dir)
+    local dir = vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr))
+    on_dir(dir)
+  end,
+})
+vim.lsp.enable 'bashls'

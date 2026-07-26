@@ -2,23 +2,27 @@ if (( ${+DEBUG_ZSH_PERF} )); then
   zmodload zsh/zprof
 fi
 
+# Create required XDG-*-HOME/* directories if they don't already exist.
+[[ -d "$XDG_CONFIG_HOME"/zsh ]] || mkdir -p "$XDG_CONFIG_HOME"/zsh
+[[ -d "$XDG_CACHE_HOME"/zsh ]] || mkdir -p "$XDG_CACHE_HOME"/zsh
+[[ -d "$XDG_CACHE_HOME"/less ]] || mkdir -p "$XDG_CACHE_HOME"/less
+
 # MAC specific.
 # Add completions for brew and for packages installed with brew. Prepending
 # this path to fpath means the brew version of a tool's completions will be
 # preferred over the system's ones, if the system has any.
 fpath=("$HOMEBREW_PREFIX/share/zsh/site-functions" $fpath)
-fpath=("$HOMEBREW_PREFIX/share/zsh_completions" $fpath) # see `brew info zsh_completions`
-export CLICOLOR=1
-export LSCOLORS=ExFxBxDxCxegedabagacad
+fpath=("$HOMEBREW_PREFIX/share/zsh-completions" $fpath) # see `brew info zsh-completions`
 
 # Aliases
 alias ll="ls -lAh"
 alias git="noglob git" # git can use glob pattern without the shell expanding it.
 
 # Persist zsh command history.
-HISTFILE="$XDG_CACHE_HOME/zsh_history"
 HISTSIZE=100000
 SAVEHIST=100000
+HISTFILE="$XDG_CACHE_HOME/zsh/zsh_history"
+LESSHISTFILE="$XDG_CACHE_HOME/less/less_history"
 
 # Useful history options. See HIST* options in `man zshoptions`.
 setopt INC_APPEND_HISTORY
@@ -72,7 +76,15 @@ PROMPT='${arrow} %F{cyan}%B${PWD:t}%b%f ${git}'
 # zle-line-init in `man zshzle`.
 autoload -Uz compinit
 zle-line-init() { 
-  compinit -d "$XDG_CACHE_HOME/zcompdump"
+  # This pattern means zcompdump needs to be cleared whenever completion
+  # scripts are added, updated, or deleted. The -C option means if there's a
+  # zcompdump cache, compinit will blindly use it.
+  local dump="$XDG_CACHE_HOME/zsh/zcompdump"
+  if [[ ! -f $dump ]]; then
+    compinit -d "$dump"
+  else
+    compinit -C -d "$dump"
+  fi
   FZF_TAB_PATH=/opt/homebrew/opt/fzf-tab/share/fzf-tab # MAC specific
   source ${FZF_TAB_PATH}/fzf-tab.zsh # Use fzf-tab plugin for interacting with completion results.
   zstyle ':completion:*:git-checkout:*' sort false # disable sort when completing `git checkout`
@@ -84,23 +96,6 @@ zle-line-init() {
   unfunction zle-line-init
 }
 zle -N zle-line-init
-
-# Utility for measuring zsh startup wall-clock time
-timezsh() {
-  zmodload zsh/datetime
-  runs=${1:-10}
-  total_ms=0
-  for i in {1..$runs}; do
-    start=$EPOCHREALTIME
-    zsh -i -c exit >/dev/null 2>&1
-    end=$EPOCHREALTIME
-    delta_ms=$(( (end - start) * 1000 ))
-    total_ms=$(( total_ms + delta_ms ))
-    printf "run %2d: %3.0f ms\n" "$i" "$delta_ms"
-  done
-  printf "\nAverage: %.0f ms\n" "$(( total_ms / runs ))"
-}
-autoload -Uz timezsh
 
 if (( ${+DEBUG_ZSH_PERF} )); then
   zprof
