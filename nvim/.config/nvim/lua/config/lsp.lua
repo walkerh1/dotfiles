@@ -1,56 +1,56 @@
 -- Go
 vim.lsp.config('gopls', {
   cmd = { 'gopls' },
-  filetypes = { 'go' },
-  root_markers = {
-    'go.mod',
-    '.git',
-  }
+  filetypes = { 'go', 'gomod', 'gosum', 'gotmpl' },
+  root_markers = { 'go.work', 'go.mod', '.git' },
 })
 vim.lsp.enable 'gopls'
 
 -- JS/TS
 vim.lsp.config('ts_ls', {
-  cmd = {
-    "typescript-language-server",
-    "--stdio",
-  },
+  cmd = { 'typescript-language-server', '--stdio' },
   filetypes = {
-    "javascript",
-    "typescript",
-    "javascriptreact",
-    "typescriptreact",
+    'javascript',
+    'javascriptreact',
+    'typescript',
+    'typescriptreact',
+    'html',
   },
-  root_markers = {
-    "tsconfig.json",
-    "jsconfig.json",
-    "package.json",
-    ".git",
-  },
+  root_dir = function(bufnr, on_dir)
+    local filename = vim.api.nvim_buf_get_name(bufnr)
+    local root = vim.fs.root(filename, {
+      'tsconfig.json',
+      'jsconfig.json',
+      'package.json',
+    })
+    on_dir(root or vim.fs.dirname(filename))
+  end,
 })
 vim.lsp.enable 'ts_ls'
 
 -- HTML
-vim.lsp.config('html', {
+vim.lsp.config('html_ls', {
   cmd = { 'vscode-html-language-server', '--stdio' },
-  filetypes = { 'html', 'gotmpl' },
+  filetypes = { 'html' },
   root_markers = { '.git' },
 })
-vim.lsp.enable 'html'
+vim.lsp.enable 'html_ls'
 
 -- CSS
-vim.lsp.config('cssls', {
+vim.lsp.config('css_ls', {
   cmd = { 'vscode-css-language-server', '--stdio' },
   filetypes = { 'css' },
   root_markers = { '.git' },
 })
-vim.lsp.enable 'cssls'
+vim.lsp.enable 'css_ls'
 
 -- Lua
 vim.lsp.config('lua_ls', {
   cmd = { 'lua-language-server' },
   filetypes = { 'lua' },
   root_markers = {
+    '.luarc.json',
+    '.luarc.jsonc',
     '.git',
   },
   settings = {
@@ -71,14 +71,3 @@ vim.lsp.config('lua_ls', {
   },
 })
 vim.lsp.enable 'lua_ls'
-
--- Bash/Zsh
-vim.lsp.config('bashls', {
-  cmd = { 'bash-language-server', 'start' },
-  filetypes = { 'sh', 'bash', 'zsh' },
-  root_dir = function(bufnr, on_dir)
-    local dir = vim.fs.dirname(vim.api.nvim_buf_get_name(bufnr))
-    on_dir(dir)
-  end,
-})
-vim.lsp.enable 'bashls'

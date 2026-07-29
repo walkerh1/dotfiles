@@ -5,9 +5,8 @@ fi
 # Create required XDG-*-HOME/* directories if they don't already exist.
 [[ -d "$XDG_CONFIG_HOME"/zsh ]] || mkdir -p "$XDG_CONFIG_HOME"/zsh
 [[ -d "$XDG_CACHE_HOME"/zsh ]] || mkdir -p "$XDG_CACHE_HOME"/zsh
-[[ -d "$XDG_CACHE_HOME"/less ]] || mkdir -p "$XDG_CACHE_HOME"/less
 
-# MAC specific.
+# (MAC_ONLY)
 # Add completions for brew and for packages installed with brew. Prepending
 # this path to fpath means the brew version of a tool's completions will be
 # preferred over the system's ones, if the system has any.
@@ -16,7 +15,8 @@ fpath=("$HOMEBREW_PREFIX/share/zsh-completions" $fpath) # see `brew info zsh-com
 
 # Aliases
 alias ll="ls -lAh"
-alias git="noglob git" # git can use glob pattern without the shell expanding it.
+alias git="noglob git" # so git can use glob pattern without the shell expanding it.
+alias cdp="cd $OLDPWD" # cd into previous working directory
 
 # Persist zsh command history.
 HISTSIZE=100000
@@ -89,7 +89,7 @@ zle-line-init() {
   else
     compinit -C -d "$dump"
   fi
-  FZF_TAB_PATH=/opt/homebrew/opt/fzf-tab/share/fzf-tab # MAC specific
+  FZF_TAB_PATH=/opt/homebrew/opt/fzf-tab/share/fzf-tab # MAC_ONLY
   source ${FZF_TAB_PATH}/fzf-tab.zsh # Use fzf-tab plugin for interacting with completion results.
   zstyle ':completion:*:git-checkout:*' sort false # disable sort when completing `git checkout`
   zstyle ':completion:*:descriptions' format '[%d]' # set descriptions format to enable group support
@@ -104,3 +104,8 @@ zle -N zle-line-init
 if (( ${+DEBUG_ZSH_PERF} )); then
   zprof
 fi
+
+# References:
+# https://github.com/smallwat3r/dotfiles/tree/26a4859c3665f4f3ef97a0d755c0e54cb822fe52/base/.zsh
+# https://github.com/BreadOnPenguins/dots/tree/master/.config/zsh
+# https://gist.github.com/LukeSmithxyz/e62f26e55ea8b0ed41a65912fbebbe52

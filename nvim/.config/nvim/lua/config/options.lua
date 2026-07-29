@@ -3,18 +3,21 @@ vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
 -- Allow different filetypes to override these options in after/ftplugin/*.lua
-vim.cmd('filetype plugin indent on')
+vim.cmd 'filetype plugin indent on'
+
+-- Auto-wrap comments on format according to textwidth specified in after/ftplugin/*.lua
+vim.opt.formatoptions:append 'cro'
 
 -- Leader key
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
 -- Gutter settings
-vim.opt.number = true         -- include line number
+vim.opt.number = true -- include line number
 vim.opt.relativenumber = true -- non-current lines have relative numbers
-vim.opt.signcolumn = 'yes:2'  -- persist gutter width
+vim.opt.signcolumn = 'yes:2' -- persist gutter width
 
--- Tab settings
+-- Default tab settings (language overrides in after/ftplugin/)
 vim.opt.expandtab = true
 vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
@@ -33,10 +36,10 @@ vim.opt.backup = false
 vim.opt.undofile = true
 
 -- Search settings
-vim.opt.hlsearch = true   -- highlight matches
-vim.opt.incsearch = true  -- incrementally match
+vim.opt.hlsearch = true -- highlight matches
+vim.opt.incsearch = true -- incrementally match
 vim.opt.ignorecase = true -- ignore case
-vim.opt.smartcase = true  -- unless uppercase letters are in the query
+vim.opt.smartcase = true -- unless uppercase letters are in the query
 
 -- Enable 24-bit color in the terminal UI
 vim.opt.termguicolors = true
@@ -44,5 +47,3 @@ vim.opt.termguicolors = true
 -- Cursor offset from top and bottom of page
 vim.opt.scrolloff = 10
 
--- Auto-wrap comments on format according to textwidth specified in after/ftplugin/*.lua
-vim.opt.formatoptions:append("cro")

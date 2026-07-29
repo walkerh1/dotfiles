@@ -12,21 +12,21 @@ return {
       'go',
       'gomod',
       'gosum',
-      'gotmpl',
+      'gowork',
       'html',
       'javascript',
       'json',
       'lua',
       'sql',
       'typescript',
+      'toml',
       'vim',
       'vimdoc',
       'yaml',
+      'zsh',
     }
     vim.api.nvim_create_autocmd('FileType', {
-      callback = function()
-        pcall(vim.treesitter.start)
-      end,
+      callback = function() pcall(vim.treesitter.start) end,
     })
   end,
 }

@@ -17,10 +17,10 @@ return {
       default_file_explorer = true,
       watch_for_changes = true,
       win_options = {
-        winbar = '%!v:lua.get_oil_winbar()'
+        winbar = '%!v:lua.get_oil_winbar()',
       },
       view_options = {
-        show_hidden = true
+        show_hidden = true,
       },
       keymaps = {
         ['td'] = {
@@ -28,43 +28,39 @@ return {
           callback = function()
             Detail = not Detail
             if Detail then
-              require('oil').set_columns({ 'icon', 'permissions', 'size', 'mtime' })
+              require('oil').set_columns { 'icon', 'permissions', 'size', 'mtime' }
             else
-              require('oil').set_columns({ 'icon' })
+              require('oil').set_columns { 'icon' }
             end
           end,
         },
-        ['ca'] = {
-          desc = '[C]opy [A]bsolute Path of File',
+        ['cP'] = {
+          desc = '[C]opy Absolute [P]ath of File',
           callback = function()
-            local entry = require("oil").get_cursor_entry()
-            if not entry then
-              return
-            end
-            local dir = require("oil").get_current_dir()
-            local path = vim.fn.fnamemodify(dir .. entry.name, ":~")
-            vim.fn.setreg("", path) -- nvim clipboard
-            vim.fn.setreg("+", path) -- system clipboard
-            vim.notify("Copied absolute path: " .. path)
-          end
+            local entry = require('oil').get_cursor_entry()
+            if not entry then return end
+            local dir = require('oil').get_current_dir()
+            local path = vim.fn.fnamemodify(dir .. entry.name, ':~')
+            vim.fn.setreg('', path) -- nvim clipboard
+            vim.fn.setreg('+', path) -- system clipboard
+            vim.notify('Copied absolute path: ' .. path)
+          end,
         },
-        ['cr'] = {
-          desc = '[C]opy [R]elative Path of File',
+        ['cp'] = {
+          desc = '[C]opy Relative [P]ath of File',
           callback = function()
-            local entry = require("oil").get_cursor_entry()
-            if not entry then
-              return
-            end
-            local dir = require("oil").get_current_dir()
-            local path = vim.fn.fnamemodify(dir .. entry.name, ":.")
-            vim.fn.setreg("", path) -- nvim clipboard
-            vim.fn.setreg("+", path) -- system clipboard
-            vim.notify("Copied relative path: " .. path)
-          end
-        }
+            local entry = require('oil').get_cursor_entry()
+            if not entry then return end
+            local dir = require('oil').get_current_dir()
+            local path = vim.fn.fnamemodify(dir .. entry.name, ':.')
+            vim.fn.setreg('', path) -- nvim clipboard
+            vim.fn.setreg('+', path) -- system clipboard
+            vim.notify('Copied relative path: ' .. path)
+          end,
+        },
       },
     }
     -- Keymap to open Oil buffer
     vim.keymap.set('n', '-', '<CMD>Oil<CR>', { desc = 'Open [P]roject [V]iew' })
-  end
+  end,
 }

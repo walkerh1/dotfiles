@@ -1,7 +1,8 @@
-require('config.options')
-require('config.icons')
-require('config.autocmds')
-require('config.diagnostics')
-require('config.lsp')
-require('config.keymaps')
-require('config.lazy')
+require 'config.options'
+require 'config.icons'
+require 'config.autocmds'
+require 'config.theme'
+require 'config.diagnostics'
+require 'config.lsp'
+require 'config.keymaps'
+require 'config.lazy'
