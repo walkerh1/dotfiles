@@ -1,6 +1,8 @@
 require 'config.options'
 require 'config.icons'
 require 'config.autocmds'
+require 'config.utilities'
+require 'config.filetypes'
 require 'config.theme'
 require 'config.diagnostics'
 require 'config.lsp'

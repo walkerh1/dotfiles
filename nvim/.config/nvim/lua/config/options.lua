@@ -47,3 +47,8 @@ vim.opt.termguicolors = true
 -- Cursor offset from top and bottom of page
 vim.opt.scrolloff = 10
 
+-- Disable alternative nvim providers
+vim.g.loaded_node_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.loaded_perl_provider = 0

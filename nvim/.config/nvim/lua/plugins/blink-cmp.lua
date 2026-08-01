@@ -11,16 +11,14 @@ return {
     },
     signature = {
       enabled = true,
+      trigger = { show_on_insert = true },
       window = { border = 'rounded' },
     },
-    snippets = {
-      preset = 'default',
+    sources = {
+      default = { 'lsp', 'path', 'buffer' },
     },
     keymap = {
       ['<CR>'] = { 'accept', 'fallback' },
-    },
-    cmdline = {
-      enabled = true,
     },
   },
 }

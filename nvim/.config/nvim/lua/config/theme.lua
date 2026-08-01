@@ -30,3 +30,20 @@ vim.api.nvim_set_hl(0, 'MsgArea', {
   fg = '#c5c8c6', -- 'Ghostty Default Style Dark' white
   update = true,
 })
+
+-- HTML/CSS: set font color of tag
+vim.api.nvim_set_hl(0, 'HtmlTag', { fg = '#a6dbff' })
+vim.api.nvim_set_hl(0, '@tag.html', { link = 'HtmlTag' })
+vim.api.nvim_set_hl(0, '@tag.css', { link = 'HtmlTag' })
+
+-- HTML: set font color of attr
+vim.api.nvim_set_hl(0, 'HtmlAttribute', { fg = '#e0e2ea' })
+vim.api.nvim_set_hl(0, '@tag.attribute.html', { link = 'HtmlAttribute' })
+
+-- HTML: set font color of delimiter
+vim.api.nvim_set_hl(0, 'HtmlDelimiter', { fg = '#9b9ea4' })
+vim.api.nvim_set_hl(0, '@tag.delimiter.html', { link = 'HtmlDelimiter' })
+
+-- CSS: set font color of property
+vim.api.nvim_set_hl(0, 'CssProperty', { fg = '#e0e2ea' })
+vim.api.nvim_set_hl(0, '@property.css', { link = 'CssProperty' })

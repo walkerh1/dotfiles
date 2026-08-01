@@ -1,7 +1,7 @@
 -- Go
 vim.lsp.config('gopls', {
   cmd = { 'gopls' },
-  filetypes = { 'go', 'gomod', 'gosum', 'gotmpl' },
+  filetypes = { 'go', 'gomod', 'gosum' },
   root_markers = { 'go.work', 'go.mod', '.git' },
 })
 vim.lsp.enable 'gopls'
@@ -31,7 +31,7 @@ vim.lsp.enable 'ts_ls'
 -- HTML
 vim.lsp.config('html_ls', {
   cmd = { 'vscode-html-language-server', '--stdio' },
-  filetypes = { 'html' },
+  filetypes = { 'html', 'gotmpl' },
   root_markers = { '.git' },
 })
 vim.lsp.enable 'html_ls'
