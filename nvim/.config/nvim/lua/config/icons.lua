@@ -5,11 +5,6 @@ Icons = {
     Hint = ' ',
     Info = ' ',
   },
-  git = {
-    Added = ' ',
-    Modified = ' ',
-    Removed = ' ',
-  },
   dap = {
     DapStopped = { '󰁕 ', 'DiagnosticWarn', 'DapStoppedLine' },
     DapBreakpoint = ' ',

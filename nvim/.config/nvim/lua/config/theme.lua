@@ -47,3 +47,6 @@ vim.api.nvim_set_hl(0, '@tag.delimiter.html', { link = 'HtmlDelimiter' })
 -- CSS: set font color of property
 vim.api.nvim_set_hl(0, 'CssProperty', { fg = '#e0e2ea' })
 vim.api.nvim_set_hl(0, '@property.css', { link = 'CssProperty' })
+
+-- Go: map 'nil' and 'iota' to Constant instead of default 'Special' hl group
+vim.api.nvim_set_hl(0, '@constant.builtin.go', { link = 'Constant' })
