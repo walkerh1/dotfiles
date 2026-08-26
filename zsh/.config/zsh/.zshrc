@@ -14,7 +14,7 @@ fpath=("$HOMEBREW_PREFIX/share/zsh/site-functions" $fpath)
 fpath=("$HOMEBREW_PREFIX/share/zsh-completions" $fpath) # see `brew info zsh-completions`
 
 # Aliases
-alias ll="ls -lAh"
+alias ll="ls -Alh" # show [A]ll files; in a [l]ist format; with [h]uman readable sizes.
 alias git="noglob git" # so git can use glob pattern without the shell expanding it.
 alias cdp="cd $OLDPWD" # cd into previous working directory
 
@@ -79,10 +79,10 @@ zle-line-init() {
   # Sets the path where files of dumped completion data are stored. See
   # cache-path in `man zshcompsys`.
   zstyle ':completion:*' cache-path "$XDG_CACHE_HOME/zsh/zcompcache"
-  # This pattern means zcompdump needs to be cleared whenever completion
-  # scripts are added, updated, or deleted. The -C option means if there's a
-  # zcompdump cache, compinit will blindly use it. See 'Use of compinit' in
-  # `man zshcompsys`.
+  # This pattern means zcompdump needs to be manually cleared whenever
+  # completion scripts are added, updated, or deleted. The -C option means if
+  # there's a zcompdump cache, compinit will blindly use it. See 'Use of
+  # compinit' in `man zshcompsys`.
   local dump="$XDG_CACHE_HOME/zsh/zcompdump"
   if [[ ! -f $dump ]]; then
     compinit -d "$dump"

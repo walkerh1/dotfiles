@@ -32,7 +32,7 @@ map('n', '<leader>e', vim.diagnostic.open_float, { desc = 'diagnostics: Show Dia
 
 -- Copy absolute and relative file paths
 map('n', '<leader>cP', function()
-  local path = vim.fn.fnamemodify(vim.fn.expand '%:p', ':~')
+  local path = vim.fn.expand '%:p'
   vim.fn.setreg('', path) -- nvim clipboard
   vim.fn.setreg('+', path) -- system clipboard
   vim.notify('Copied absolute path: ' .. path)

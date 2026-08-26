@@ -12,20 +12,6 @@ return {
           detached = vim.fn.has 'win32' == 0,
         },
       }
-      dap.configurations.go = {
-        {
-          type = 'delve',
-          name = 'Debug current file',
-          request = 'launch',
-          program = '${file}',
-        },
-        {
-          type = 'delve',
-          name = 'Current package',
-          request = 'launch',
-          program = '${workspaceFolder}',
-        },
-      }
       vim.api.nvim_set_hl(0, 'DapStoppedLine', { default = true, link = 'Visual' })
       for name, sign in pairs(Icons.dap) do
         sign = type(sign) == 'table' and sign or { sign } ---@cast sign string
@@ -74,5 +60,11 @@ return {
       dap.listeners.before.event_terminated['dapui_config'] = function() dapui.close {} end
       dap.listeners.before.event_exited['dapui_config'] = function() dapui.close {} end
     end,
+  },
+  {
+    'leoluz/nvim-dap-go',
+    dependencies = { 'mfussenegger/nvim-dap' },
+    ft = { 'go' },
+    opts = {},
   },
 }

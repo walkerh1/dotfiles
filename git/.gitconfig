@@ -1,12 +1,20 @@
+[user]
+  name = hugo
+  email = hugowalkersmith@gmail.com
 [init]
 	defaultbranch = main
 [core]
-	pager = bat
 	editor = nvim
-[url "ssh://git@github.com/"]
-	insteadOf = https://github.com/
+  autocrlf = input
 [pull]
 	rebase = true
-[user]
-	name = hugo
-  email = hugowalkersmith@gmail.com
+[diff]
+  algorithm = histogram
+[rerere]
+  enabled = true
+[color]
+  ui = auto
+[alias]
+  logp = log --all --graph --format=format:'%C(yellow)%h%C(reset)%C(auto)%d%C(reset) %s %C(dim white)- %an (%as)%C(reset)'
+[url "git@github.com:"]
+	insteadOf = https://github.com/

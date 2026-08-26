@@ -9,10 +9,6 @@ return {
         window = { border = 'rounded' },
       },
     },
-    signature = {
-      enabled = true,
-      window = { border = 'rounded' },
-    },
     sources = {
       default = { 'lsp', 'path', 'buffer' },
     },

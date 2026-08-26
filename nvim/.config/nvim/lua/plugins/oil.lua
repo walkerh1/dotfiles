@@ -24,7 +24,7 @@ return {
       },
       keymaps = {
         ['td'] = {
-          desc = '[T]oggle File [D]etail View',
+          desc = 'oil: [T]oggle File [D]etail View',
           callback = function()
             Detail = not Detail
             if Detail then
@@ -34,20 +34,23 @@ return {
             end
           end,
         },
-        ['cP'] = {
-          desc = '[C]opy Absolute [P]ath of File',
+        -- These are the same keymaps for copying paths in normal buffers, but
+        -- these mappings take precedence in oil buffers, as the oil config is
+        -- loaded after those other keymaps are set.
+        ['<leader>cP'] = {
+          desc = 'oil: [C]opy Absolute [P]ath of File Under Cursor',
           callback = function()
             local entry = require('oil').get_cursor_entry()
             if not entry then return end
             local dir = require('oil').get_current_dir()
-            local path = vim.fn.fnamemodify(dir .. entry.name, ':~')
+            local path = vim.fn.fnamemodify(dir .. entry.name, '%:p')
             vim.fn.setreg('', path) -- nvim clipboard
             vim.fn.setreg('+', path) -- system clipboard
             vim.notify('Copied absolute path: ' .. path)
           end,
         },
-        ['cp'] = {
-          desc = '[C]opy Relative [P]ath of File',
+        ['<leader>cp'] = {
+          desc = 'oil: [C]opy Relative [P]ath of File Under Cursor',
           callback = function()
             local entry = require('oil').get_cursor_entry()
             if not entry then return end
