@@ -53,5 +53,5 @@ vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
 vim.g.loaded_perl_provider = 0
 
--- Show relative path to current file in winbar (relative to cwd)
-vim.opt.winbar = "%{expand('%:~')}"
+-- Show current buffer's file path relative to cwd in winbar
+vim.opt.winbar = '%f'

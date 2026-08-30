@@ -22,6 +22,9 @@ return {
       view_options = {
         show_hidden = true,
       },
+      keymaps_help = {
+        border = 'rounded',
+      },
       keymaps = {
         ['td'] = {
           desc = 'oil: [T]oggle File [D]etail View',
