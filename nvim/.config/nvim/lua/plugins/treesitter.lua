@@ -18,6 +18,7 @@ return {
       'javascript',
       'json',
       'lua',
+      'make',
       'markdown',
       'sql',
       'typescript',
