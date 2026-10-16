@@ -1,0 +1,6 @@
+[display]
+compact = true
+placeholder_format = "both"
+
+[updates]
+auto_update = true

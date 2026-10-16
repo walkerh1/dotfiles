@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+[[ $# -ne 1 ]] && echo "openurl: must have exactly one argument" && exit 1
+
+nohup "${BROWSER}" "$1" >/dev/null 2>&1 &

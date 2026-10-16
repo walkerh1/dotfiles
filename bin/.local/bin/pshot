@@ -1,0 +1,2 @@
+#!/usr/bin/sh
+geom="$(slurp)"; grim -l 0 -g "$geom"
