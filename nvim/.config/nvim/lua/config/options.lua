@@ -15,7 +15,7 @@ vim.g.maplocalleader = ' '
 -- Gutter settings
 vim.opt.number = true -- include line number
 vim.opt.relativenumber = true -- non-current lines have relative numbers
-vim.opt.signcolumn = 'yes:2' -- persist gutter width
+vim.opt.signcolumn = 'yes:1' -- persist gutter width
 
 -- Default tab settings (language overrides in after/ftplugin/)
 vim.opt.expandtab = true
@@ -55,3 +55,6 @@ vim.g.loaded_perl_provider = 0
 
 -- Show current buffer's file path relative to cwd in winbar
 vim.opt.winbar = '%f'
+
+-- Open urls with custom 'openurl' script
+vim.ui.open = 'openurl'

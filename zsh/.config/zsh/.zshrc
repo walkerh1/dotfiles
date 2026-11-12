@@ -2,8 +2,14 @@ if (( ${+DEBUG_ZSH_PERF} )); then
   zmodload zsh/zprof
 fi
 
+# Zig (select either dev or stable path)
+# ZIGPATH="$HOME/zig/dev"
+ZIGPATH="$HOME/zig/stable"
+export PATH="$PATH:$ZIGPATH"
+
 # Aliases
 alias ll="ls --color=auto -Alh" # show [A]ll files; in a [l]ist format; with [h]uman readable sizes.
+alias grep="grep --color=always" # always show the matching substring of the line in colour.
 alias git="noglob git" # so git can use glob pattern without the shell expanding it.
 alias cdp="cd $OLDPWD" # cd into previous working directory
 

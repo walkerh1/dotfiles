@@ -1,0 +1,14 @@
+#!/bin/sh
+
+# The down and up controls unmute audio sink (if it's muted) before changing
+# the volume.
+
+case $1 in
+  toggle) wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle ;;
+  down) wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-;;
+  up) wpctl set-mute @DEFAULT_AUDIO_SINK@ 0 && wpctl set-volume --limit=1 @DEFAULT_AUDIO_SINK@ 5%+;;
+  mic) wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle ;;
+esac
+
+# Send a signal to the [volume] block that the volume has changed.
+pkill -SIGRTMIN+10 i3blocks

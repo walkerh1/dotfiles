@@ -26,3 +26,9 @@ export PATH="$PATH:$GOBIN:$NPM_BIN:$HOME/.local/bin"
 
 # Where grim saves screenshots
 export GRIM_DEFAULT_DIR="$HOME/screenshots"
+
+# For ssh-agent.service
+export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/ssh-agent.socket"
+
+# Start sway after logging in from tty1
+[[ "$(tty)" = "/dev/tty1" ]] && exec sway

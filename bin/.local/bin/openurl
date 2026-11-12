@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 [[ $# -ne 1 ]] && echo "openurl: must have exactly one argument" && exit 1
 

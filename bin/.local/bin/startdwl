@@ -1,4 +1,4 @@
-#!/usr/bin/sh
+#!/bin/sh
 
 dwl -s "swaybg --image /home/hugo/wallpapers/wallhaven-yx3577.png & dwlb" &
 slstatus -s | dwlb -status-stdin all
